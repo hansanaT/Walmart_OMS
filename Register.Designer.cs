@@ -195,7 +195,6 @@
             this.btn_signup_google.Size = new System.Drawing.Size(75, 57);
             this.btn_signup_google.TabIndex = 76;
             this.btn_signup_google.UseVisualStyleBackColor = true;
-            this.btn_signup_google.Click += new System.EventHandler(this.btn_signup_google_Click);
             // 
             // label10
             // 

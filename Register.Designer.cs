@@ -36,6 +36,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_signup_google = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.txt_userid = new System.Windows.Forms.TextBox();
             this.cb_showpassword = new System.Windows.Forms.CheckBox();
@@ -156,6 +157,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.btn_signup_google);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.txt_userid);
             this.panel1.Controls.Add(this.cb_showpassword);
@@ -183,6 +185,17 @@
             this.panel1.Size = new System.Drawing.Size(717, 880);
             this.panel1.TabIndex = 0;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            // 
+            // btn_signup_google
+            // 
+            this.btn_signup_google.BackgroundImage = global::Walmart_OMS.Properties.Resources.png_transparent_google_logo_google_text_trademark_logo;
+            this.btn_signup_google.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_signup_google.Location = new System.Drawing.Point(575, 790);
+            this.btn_signup_google.Name = "btn_signup_google";
+            this.btn_signup_google.Size = new System.Drawing.Size(75, 57);
+            this.btn_signup_google.TabIndex = 76;
+            this.btn_signup_google.UseVisualStyleBackColor = true;
+            this.btn_signup_google.Click += new System.EventHandler(this.btn_signup_google_Click);
             // 
             // label10
             // 
@@ -462,5 +475,6 @@
         private System.Windows.Forms.Button btn_back;
         private System.Windows.Forms.TextBox txt_email;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btn_signup_google;
     }
 }

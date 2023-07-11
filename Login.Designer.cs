@@ -39,6 +39,7 @@
             this.txt_password = new System.Windows.Forms.TextBox();
             this.txt_username = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_google = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -66,6 +67,7 @@
             // 
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.panel1.Controls.Add(this.btn_google);
             this.panel1.Controls.Add(this.txt_userid);
             this.panel1.Controls.Add(this.btn_back);
             this.panel1.Controls.Add(this.cb_showpassword);
@@ -182,6 +184,16 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             // 
+            // btn_google
+            // 
+            this.btn_google.Location = new System.Drawing.Point(55, 603);
+            this.btn_google.Name = "btn_google";
+            this.btn_google.Size = new System.Drawing.Size(438, 47);
+            this.btn_google.TabIndex = 7;
+            this.btn_google.Text = "Sign in with Google";
+            this.btn_google.UseVisualStyleBackColor = true;
+            this.btn_google.Click += new System.EventHandler(this.btn_google_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -213,5 +225,6 @@
         private System.Windows.Forms.TextBox txt_username;
         private System.Windows.Forms.Button btn_back;
         private System.Windows.Forms.TextBox txt_userid;
+        private System.Windows.Forms.Button btn_google;
     }
 }

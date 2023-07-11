@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
+using Google.Apis.Auth;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Oauth2.v2;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using Microsoft.VisualBasic;
 
 namespace Walmart_OMS
 {
     public partial class Register : Form
     {
+        private UserCredential credential;
+        
         public Register()
         {
             InitializeComponent();
@@ -49,7 +61,7 @@ namespace Walmart_OMS
 
         private void Register_Load(object sender, EventArgs e)
         {
-            con = new SqlConnection("Data Source=HANSANA-3501;Initial Catalog=WalmartOMS_DB;Integrated Security=True");
+            con = new SqlConnection("Data Source=HANSANA-7620;Initial Catalog=WalmartOMS_DB;Integrated Security=True");
             string ID = "WC-";
             string s94 = "+94";
             txt_TP.Text = s94 + txt_TP.Text;
@@ -219,6 +231,77 @@ namespace Walmart_OMS
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        private void btn_signup_google_Click(object sender, EventArgs e)
+        {
+            GoogleWebAuthorizationBroker.Folder = "Google.Apis.Auth";
+            var initializer = new GoogleAuthorizationCodeFlow.Initializer
+            {
+                ClientSecrets = new ClientSecrets
+                {
+                    ClientId = "1093540342518-bogfqtvrrggn1gp9hosfnh7bbhb0jhjn.apps.googleusercontent.com",
+                    ClientSecret = "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"
+                },
+                Scopes = new[] { "email", "profile" },
+                DataStore = new FileDataStore("Google.Apis.Auth.Store")
+            };
+
+            var codeFlow = new GoogleAuthorizationCodeFlow(initializer);
+            var authCode = GetAuthorizationCode(codeFlow);
+            if (authCode != null)
+            {
+                var tokenResponse = codeFlow.ExchangeCodeForTokenAsync("", authCode, "postmessage", CancellationToken.None).Result;
+                credential = new UserCredential(codeFlow, "", tokenResponse);
+
+                // Get user info
+                var oauthService = new Oauth2Service(new BaseClientService.Initializer { HttpClientInitializer = credential });
+                var userInfo = oauthService.Userinfo.Get().Execute();
+
+                // Store username and password in the database
+                StoreUserCredentials(userInfo.Email, GenerateRandomPassword());
+
+                MessageBox.Show("Sign up successful!");
+            }
+        }
+
+        private string GetAuthorizationCode(GoogleAuthorizationCodeFlow codeFlow)
+        {
+            var authorizationCodeRequestUrl = codeFlow.CreateAuthorizationCodeRequest("urn:ietf:wg:oauth:2.0:oob");
+
+            var authorizationCode = MessageBox.Show("Enter the authorization code:", "Authorization Code", MessageBoxButtons.OKCancel);
+            if (authorizationCode == DialogResult.OK)
+            {
+                return Interaction.InputBox("Enter the authorization code:", "Authorization Code");
+            }
+            else
+            {
+                // Handle cancellation or other scenarios
+                return null;
+            }
+        }
+
+        private string GenerateRandomPassword()
+        {
+            // Generate a random password or use your preferred password generation method(8-character password)
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            var password = new string(Enumerable.Repeat(chars, 8).Select(s => s[random.Next(s.Length)]).ToArray());
+            return password;
+        }
+
+        private void StoreUserCredentials(string username, string password)
+        {
+            using (SqlConnection connection = new SqlConnection("Data Source=HANSANA-7620;Initial Catalog=WalmartOMS_DB;Integrated Security=True"))
+            {
+                string query = "INSERT INTO Users (Username, Password) VALUES (@Username, @Password)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Username", username);
+                command.Parameters.AddWithValue("@Password", password);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
     }
 }

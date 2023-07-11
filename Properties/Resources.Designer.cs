@@ -293,6 +293,16 @@ namespace Walmart_OMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap png_transparent_google_logo_google_text_trademark_logo {
+            get {
+                object obj = ResourceManager.GetObject("png-transparent-google-logo-google-text-trademark-logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap purchase_order_128 {
             get {
                 object obj = ResourceManager.GetObject("purchase-order-128", resourceCulture);

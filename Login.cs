@@ -185,5 +185,10 @@ namespace Walmart_OMS
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
+
+        private void btn_google_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
